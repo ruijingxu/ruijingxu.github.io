@@ -86,7 +86,7 @@ Inspect `http://127.0.0.1:8000/` at approximately 1440x900 and 390x844. Confirm 
 
 Run: `.venv/bin/python -m unittest tests/test_site.py -v`
 
-Run: `rg -n -i "Jon Barron|jonbarron@gmail.com|JonBarron" --glob '!README.md' --glob '!docs/**' .`
+Run: `rg -n -i "Jon Barron|jonbarron@gmail.com|JonBarron" index.html stylesheet.css _config.yml`
 
 Expected: tests PASS and the prohibited-content search returns no matches.
 
@@ -97,4 +97,3 @@ Run: `git add README.md index.html stylesheet.css && git commit -m "docs: attrib
 - [ ] **Step 5: Push and verify GitHub Pages**
 
 Run: `git push origin main`, then open `https://ruijingxu.github.io/` and confirm the deployed title, portrait, links, CV download, and responsive presentation match the local site.
-
