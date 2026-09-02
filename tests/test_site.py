@@ -12,6 +12,8 @@ class PageParser(HTMLParser):
         self.links = []
         self.images = []
         self.icons = []
+        self.headings = []
+        self._heading = None
 
     def handle_starttag(self, tag, attrs):
         attributes = dict(attrs)
@@ -21,6 +23,17 @@ class PageParser(HTMLParser):
             self.images.append(attributes)
         if tag == "link" and "icon" in attributes.get("rel", "").split():
             self.icons.append(attributes.get("href"))
+        if tag in {"h2", "h3"}:
+            self._heading = [tag, ""]
+
+    def handle_data(self, data):
+        if self._heading is not None:
+            self._heading[1] += data
+
+    def handle_endtag(self, tag):
+        if self._heading is not None and tag == self._heading[0]:
+            self.headings.append((tag, " ".join(self._heading[1].split())))
+            self._heading = None
 
 
 class AcademicHomepageTest(unittest.TestCase):
@@ -86,6 +99,28 @@ class AcademicHomepageTest(unittest.TestCase):
     def test_favicon_is_declared_and_resolves_locally(self):
         self.assertEqual(self.parser.icons, ["images/favicon.svg"])
         self.assertTrue((ROOT / self.parser.icons[0]).is_file())
+
+    def test_experience_is_organized_into_distinct_sections(self):
+        section_headings = [
+            text for level, text in self.parser.headings if level == "h2"
+        ]
+        self.assertEqual(
+            section_headings,
+            ["Research", "Internship Experience", "Project Experience"],
+        )
+
+        entry_headings = [
+            text for level, text in self.parser.headings if level == "h3"
+        ]
+        self.assertEqual(
+            entry_headings,
+            [
+                "Learning Visuo-Tactile Perception for Contact-rich Robotic Manipulation",
+                "Swancor PrimeBOT",
+                "Senad Robotics Co., Ltd",
+                "Edge AI-based Heart Sound Diagnosis System",
+            ],
+        )
 
 
 if __name__ == "__main__":
