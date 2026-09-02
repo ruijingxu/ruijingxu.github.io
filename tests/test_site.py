@@ -11,6 +11,7 @@ class PageParser(HTMLParser):
         super().__init__()
         self.links = []
         self.images = []
+        self.icons = []
 
     def handle_starttag(self, tag, attrs):
         attributes = dict(attrs)
@@ -18,6 +19,8 @@ class PageParser(HTMLParser):
             self.links.append(attributes["href"])
         if tag == "img":
             self.images.append(attributes)
+        if tag == "link" and "icon" in attributes.get("rel", "").split():
+            self.icons.append(attributes.get("href"))
 
 
 class AcademicHomepageTest(unittest.TestCase):
@@ -80,7 +83,10 @@ class AcademicHomepageTest(unittest.TestCase):
             with self.subTest(text=text):
                 self.assertNotIn(text, self.html)
 
+    def test_favicon_is_declared_and_resolves_locally(self):
+        self.assertEqual(self.parser.icons, ["images/favicon.svg"])
+        self.assertTrue((ROOT / self.parser.icons[0]).is_file())
+
 
 if __name__ == "__main__":
     unittest.main()
-
