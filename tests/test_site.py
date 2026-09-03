@@ -100,6 +100,13 @@ class AcademicHomepageTest(unittest.TestCase):
         self.assertEqual(self.parser.icons, ["images/favicon.svg"])
         self.assertTrue((ROOT / self.parser.icons[0]).is_file())
 
+    def test_availability_uses_light_pink_highlight_without_left_border(self):
+        stylesheet = (ROOT / "stylesheet.css").read_text(encoding="utf-8")
+        self.assertIn('<p class="availability">', self.html)
+        self.assertIn(".availability", stylesheet)
+        self.assertIn("background-color: #fff1f4;", stylesheet)
+        self.assertNotIn("border-left:", stylesheet)
+
     def test_experience_is_organized_into_distinct_sections(self):
         section_headings = [
             text for level, text in self.parser.headings if level == "h2"

@@ -124,6 +124,12 @@ p {
   margin-top: 10px;
 }
 
+.availability {
+  padding: 10px 12px;
+  background-color: #fff1f4;
+  border-radius: 4px;
+}
+
 .entry-list {
   margin-top: 10px;
 }
