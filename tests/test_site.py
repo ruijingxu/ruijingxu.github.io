@@ -106,7 +106,12 @@ class AcademicHomepageTest(unittest.TestCase):
         ]
         self.assertEqual(
             section_headings,
-            ["Research", "Internship Experience", "Project Experience"],
+            [
+                "Education",
+                "Research",
+                "Internship",
+                "Project",
+            ],
         )
 
         entry_headings = [
@@ -115,12 +120,23 @@ class AcademicHomepageTest(unittest.TestCase):
         self.assertEqual(
             entry_headings,
             [
+                "National University of Singapore",
+                "Nanjing University of Science and Technology",
+                "Universitat Politècnica de Catalunya",
                 "Learning Visuo-Tactile Perception for Contact-rich Robotic Manipulation",
                 "Swancor PrimeBOT",
                 "Senad Robotics Co., Ltd",
                 "Edge AI-based Heart Sound Diagnosis System",
             ],
         )
+
+        for education_detail in (
+            "M.Sc. in Electrical Engineering · Aug 2026-Jun 2027 · Singapore",
+            "B.Eng. in Electronic and Information Engineering · Sep 2022-Jun 2026 · Nanjing, China",
+            "Exchange Student in Electrical Engineering · Sep 2024-Jan 2025 · Barcelona, Spain",
+        ):
+            with self.subTest(education_detail=education_detail):
+                self.assertIn(education_detail, self.html)
 
 
 if __name__ == "__main__":
