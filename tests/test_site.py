@@ -154,6 +154,13 @@ class AcademicHomepageTest(unittest.TestCase):
         self.assertEqual(png_header[:8], b"\x89PNG\r\n\x1a\n")
         self.assertEqual(struct.unpack(">II", png_header[16:24]), (512, 512))
 
+    def test_msc_dissertation_has_a_gelsight_logo(self):
+        self.assertTrue((ROOT / "images/gelsight-mini.png").is_file())
+        self.assertIn(
+            '<img class="organization-logo" src="images/gelsight-mini.png" alt="GelSight mini logo">',
+            self.html,
+        )
+
     def test_experience_is_organized_into_distinct_sections(self):
         section_headings = [
             text for level, text in self.parser.headings if level == "h2"
