@@ -110,7 +110,7 @@ class AcademicHomepageTest(unittest.TestCase):
 
     def test_organization_logos_link_to_official_websites(self):
         expected = {
-            "images/nus-logo.png": "https://www.nus.edu.sg/",
+            "images/nus-logo.svg": "https://www.nus.edu.sg/",
             "images/njust-logo.webp": "https://www.njust.edu.cn/",
             "images/upc-logo.png": "https://www.upc.edu/es",
             "images/primebot-logo.jpeg": "https://www.primebot.cn/",
