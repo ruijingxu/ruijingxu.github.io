@@ -138,6 +138,19 @@ p {
   padding: 16px 8px;
 }
 
+.entry-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.organization-logo {
+  display: block;
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+
 .entry p:last-child,
 .entry ul:last-child {
   margin-bottom: 0;

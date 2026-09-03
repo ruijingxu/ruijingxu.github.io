@@ -107,6 +107,22 @@ class AcademicHomepageTest(unittest.TestCase):
         self.assertIn("background-color: #fff1f4;", stylesheet)
         self.assertNotIn("border-left:", stylesheet)
 
+    def test_organization_logos_link_to_official_websites(self):
+        expected = {
+            "images/nus-logo.png": "https://www.nus.edu.sg/",
+            "images/njust-logo.webp": "https://www.njust.edu.cn/",
+            "images/upc-logo.png": "https://www.upc.edu/es",
+            "images/primebot-logo.jpeg": "https://www.primebot.cn/",
+            "images/senad-logo.webp": "https://www.senadvision.com/",
+        }
+        for image_path, website in expected.items():
+            with self.subTest(image_path=image_path):
+                self.assertTrue((ROOT / image_path).is_file())
+                self.assertIn(f'href="{website}"', self.html)
+                self.assertIn(f'src="{image_path}"', self.html)
+        stylesheet = (ROOT / "stylesheet.css").read_text(encoding="utf-8")
+        self.assertIn(".organization-logo", stylesheet)
+
     def test_experience_is_organized_into_distinct_sections(self):
         section_headings = [
             text for level, text in self.parser.headings if level == "h2"
@@ -114,10 +130,10 @@ class AcademicHomepageTest(unittest.TestCase):
         self.assertEqual(
             section_headings,
             [
-                "Education",
                 "Research",
-                "Internship",
                 "Project",
+                "Internship",
+                "Education",
             ],
         )
 
@@ -127,13 +143,13 @@ class AcademicHomepageTest(unittest.TestCase):
         self.assertEqual(
             entry_headings,
             [
+                "Learning Visuo-Tactile Perception for Contact-rich Robotic Manipulation",
+                "Edge AI-based Heart Sound Diagnosis System",
+                "Swancor PrimeBOT",
+                "Senad Robotics Co., Ltd",
                 "National University of Singapore",
                 "Nanjing University of Science and Technology",
                 "Universitat Politècnica de Catalunya",
-                "Learning Visuo-Tactile Perception for Contact-rich Robotic Manipulation",
-                "Swancor PrimeBOT",
-                "Senad Robotics Co., Ltd",
-                "Edge AI-based Heart Sound Diagnosis System",
             ],
         )
 
