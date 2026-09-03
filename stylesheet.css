@@ -136,7 +136,6 @@ p {
 
 .entry {
   padding: 16px 8px;
-  border-top: 1px solid var(--rule);
 }
 
 .entry p:last-child,
