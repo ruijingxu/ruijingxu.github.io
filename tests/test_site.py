@@ -1,5 +1,6 @@
 from html.parser import HTMLParser
 from pathlib import Path
+import struct
 import unittest
 
 
@@ -149,6 +150,9 @@ class AcademicHomepageTest(unittest.TestCase):
             '<img class="organization-logo" src="images/edge-ai-logo.png" alt="Edge AI project logo">',
             self.html,
         )
+        png_header = (ROOT / "images/edge-ai-logo.png").read_bytes()
+        self.assertEqual(png_header[:8], b"\x89PNG\r\n\x1a\n")
+        self.assertEqual(struct.unpack(">II", png_header[16:24]), (512, 512))
 
     def test_experience_is_organized_into_distinct_sections(self):
         section_headings = [
