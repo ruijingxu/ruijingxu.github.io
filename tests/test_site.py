@@ -123,6 +123,26 @@ class AcademicHomepageTest(unittest.TestCase):
         stylesheet = (ROOT / "stylesheet.css").read_text(encoding="utf-8")
         self.assertIn(".organization-logo", stylesheet)
 
+    def test_organization_names_carry_links_and_primebot_identifies_agibot(self):
+        for website, name in (
+            ("https://www.primebot.cn/", "Swancor PrimeBOT"),
+            ("https://www.senadvision.com/", "Senad Robotics Co., Ltd"),
+            ("https://www.nus.edu.sg/", "National University of Singapore"),
+            ("https://www.njust.edu.cn/", "Nanjing University of Science and Technology"),
+            ("https://www.upc.edu/es", "Universitat Politècnica de Catalunya"),
+        ):
+            with self.subTest(name=name):
+                self.assertIn(f'h3><a href="{website}"', self.html)
+                self.assertIn(f">{name}</a>", self.html)
+        self.assertIn(
+            'href="https://www.agibot.com.cn/"',
+            self.html,
+        )
+        self.assertIn("(subsidiary of AGIBOT)", self.html)
+        stylesheet = (ROOT / "stylesheet.css").read_text(encoding="utf-8")
+        self.assertIn("width: 56px;", stylesheet)
+        self.assertIn("height: 56px;", stylesheet)
+
     def test_experience_is_organized_into_distinct_sections(self):
         section_headings = [
             text for level, text in self.parser.headings if level == "h2"
@@ -145,7 +165,7 @@ class AcademicHomepageTest(unittest.TestCase):
             [
                 "Learning Visuo-Tactile Perception for Contact-rich Robotic Manipulation",
                 "Edge AI-based Heart Sound Diagnosis System",
-                "Swancor PrimeBOT",
+                "Swancor PrimeBOT (subsidiary of AGIBOT)",
                 "Senad Robotics Co., Ltd",
                 "National University of Singapore",
                 "Nanjing University of Science and Technology",

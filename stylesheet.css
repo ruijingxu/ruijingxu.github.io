@@ -140,15 +140,26 @@ p {
 
 .entry-heading {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
 }
 
 .organization-logo {
   display: block;
-  width: 42px;
-  height: 42px;
+  flex: 0 0 56px;
+  width: 56px;
+  height: 56px;
   object-fit: contain;
+}
+
+.entry-details {
+  min-width: 0;
+}
+
+.affiliation {
+  font-size: 12px;
+  font-weight: 400;
+  white-space: nowrap;
 }
 
 .entry p:last-child,
