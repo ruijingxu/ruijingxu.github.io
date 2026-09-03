@@ -101,6 +101,11 @@ class AcademicHomepageTest(unittest.TestCase):
         self.assertEqual(self.parser.icons, ["images/favicon.svg"])
         self.assertTrue((ROOT / self.parser.icons[0]).is_file())
 
+    def test_favicon_displays_rae(self):
+        favicon = (ROOT / "images/favicon.svg").read_text(encoding="utf-8")
+        self.assertIn('aria-label="RAE"', favicon)
+        self.assertIn(">RAE</text>", favicon)
+
     def test_availability_uses_light_pink_highlight_without_left_border(self):
         stylesheet = (ROOT / "stylesheet.css").read_text(encoding="utf-8")
         self.assertIn('<p class="availability">', self.html)
@@ -141,8 +146,8 @@ class AcademicHomepageTest(unittest.TestCase):
         )
         self.assertIn("(subsidiary of AGIBOT)", self.html)
         stylesheet = (ROOT / "stylesheet.css").read_text(encoding="utf-8")
-        self.assertIn("width: 56px;", stylesheet)
-        self.assertIn("height: 56px;", stylesheet)
+        self.assertIn("width: 70px;", stylesheet)
+        self.assertIn("height: 70px;", stylesheet)
 
     def test_edge_ai_project_has_a_logo(self):
         self.assertTrue((ROOT / "images/edge-ai-logo.png").is_file())
@@ -192,9 +197,9 @@ class AcademicHomepageTest(unittest.TestCase):
         )
 
         for education_detail in (
-            "M.Sc. in Electrical Engineering · Aug 2026-Jun 2027 · Singapore",
-            "B.Eng. in Electronic and Information Engineering · Sep 2022-Jun 2026 · Nanjing, China",
-            "Exchange Student in Electrical Engineering · Sep 2024-Jan 2025 · Barcelona, Spain",
+            "M.Sc. in Electrical Engineering · Aug 2026-Jun 2027",
+            "B.Eng. in Electronic and Information Engineering · Sep 2022-Jun 2026",
+            "Exchange Student in Electrical Engineering · Sep 2024-Jan 2025",
         ):
             with self.subTest(education_detail=education_detail):
                 self.assertIn(education_detail, self.html)
