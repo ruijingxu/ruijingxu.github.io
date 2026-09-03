@@ -143,6 +143,13 @@ class AcademicHomepageTest(unittest.TestCase):
         self.assertIn("width: 56px;", stylesheet)
         self.assertIn("height: 56px;", stylesheet)
 
+    def test_edge_ai_project_has_a_logo(self):
+        self.assertTrue((ROOT / "images/edge-ai-logo.png").is_file())
+        self.assertIn(
+            '<img class="organization-logo" src="images/edge-ai-logo.png" alt="Edge AI project logo">',
+            self.html,
+        )
+
     def test_experience_is_organized_into_distinct_sections(self):
         section_headings = [
             text for level, text in self.parser.headings if level == "h2"
