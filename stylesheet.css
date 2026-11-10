@@ -97,7 +97,7 @@ p {
 
 .portrait-wrap a {
   display: block;
-  width: min(100%, 240px);
+  width: min(100%, 180px);
   aspect-ratio: 1;
   border-radius: 50%;
   overflow: hidden;
@@ -211,7 +211,7 @@ footer p {
   }
 
   .portrait-wrap a {
-    width: 190px;
+    width: 150px;
   }
 
   h1 {
